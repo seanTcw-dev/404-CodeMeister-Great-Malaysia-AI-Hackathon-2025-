@@ -1,7 +1,7 @@
 # 404-CodeMeister-Great-Malaysia-AI-Hackathon-2025-
 🤖 AI Assistant Demo
 📌 Project Overview
-
+AWS Amplify : https://main.d3p9yg8d0opcj0.amplifyapp.com/
 This is an AI Assistant demo built with AWS Amplify + Lambda.
 It allows users to submit queries, which are processed through API Gateway → Lambda → AI model for generating responses.
 The goal is to showcase a simple yet complete cloud-based AI workflow.
