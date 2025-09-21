@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Clinical Co-Pilot Dashboard</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Left Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 2L28 8V24L16 30L4 24V8L16 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M16 16L28 8L16 2L4 8L16 16Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M4 24L16 16L28 24" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M16 30V16" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h1>Clinical Co-Pilot</h1>
+            </div>
+            
+            <button id="new-session-btn" class="primary-action-btn">
+                <span class="plus-icon">+</span>
+                New Session
+            </button>
+            
+            <button id="use-case-expansion-btn" class="secondary-action-btn" style="margin-top: 8px;">
+                <span class="magic-icon">✨</span>
+                Use Case Expansion
+            </button>
+            
+            <div class="sessions-section">
+                <h4>SESSIONS</h4>
+                <ul class="session-history" id="session-history">
+                    <!-- Dynamic session items will be added here -->
+                </ul>
+                <div class="no-sessions-placeholder" id="no-sessions-placeholder">
+                    <p>No active sessions</p>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Chat Window -->
+        <main class="chat-window">
+            <header class="chat-header">
+                <div class="header-left">
+                    <!-- Mode Toggle -->
+                    <div class="mode-toggle-container">
+                        <div class="mode-toggle">
+                            <input type="radio" id="general-mode" name="chat-mode" value="general" checked>
+                            <label for="general-mode" class="mode-label general">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 2C11.3137 2 14 4.68629 14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2Z" stroke="currentColor" stroke-width="1.5"/>
+                                    <path d="M8 5V8L10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                General
+                            </label>
+                            <input type="radio" id="patient-mode" name="chat-mode" value="patient">
+                            <label for="patient-mode" class="mode-label patient">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 8C9.65685 8 11 6.65685 11 5C11 3.34315 9.65685 2 8 2C6.34315 2 5 3.34315 5 5C5 6.65685 6.34315 8 8 8Z" stroke="currentColor" stroke-width="1.5"/>
+                                    <path d="M2 14C2 11.2386 4.23858 9 7 9H9C11.7614 9 14 11.2386 14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Patient
+                            </label>
+                            <input type="radio" id="pdf-mode" name="chat-mode" value="pdf">
+                            <label for="pdf-mode" class="mode-label pdf">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 2H9L13 6V14C13 14.5523 12.5523 15 12 15H3C2.44772 15 2 14.5523 2 14V3C2 2.44772 2.44772 2 3 2Z" stroke="currentColor" stroke-width="1.5"/>
+                                    <path d="M9 2V6H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                PDF
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Patient Info (hidden in general mode) -->
+                    <div id="current-patient" class="patient-info">
+                        <span class="patient-name-placeholder">No patient selected</span>
+                    </div>
+                </div>
+                
+                <div class="header-actions">
+                    <button id="theme-toggle" class="theme-toggle-btn" title="Toggle theme">
+                        <svg class="sun-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 2V4M8 12V14M14 8H12M4 8H2M11.3137 4.68629L9.89949 6.10051M6.10049 9.89949L4.68628 11.3137M11.3137 11.3137L9.89949 9.89949M6.10049 6.10051L4.68628 4.68629" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        <svg class="moon-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 8C2 12.4183 5.58172 16 10 16C11.813 16 13.4337 15.2673 14.6609 14.078C13.9468 14.578 13.0186 14.875 12 14.875C8.27208 14.875 5.125 11.7279 5.125 8C5.125 6.98142 5.42195 6.05324 5.92196 5.33911C4.73271 6.56628 4 8.18696 4 10C4 12.4183 2 8 2 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button id="clear-chat-btn" class="secondary-action-btn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2Z" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M5 5L11 11M11 5L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Clear Chat
+                    </button>
+                </div>
+            </header>
+
+            <div class="chat-log" id="chat-log">
+                <!-- Welcome Message Card - First and only default child -->
+                <div id="welcome-message" class="welcome-message-card">
+                    <div class="welcome-header">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 4L40 12V36L24 44L8 36V12L24 4Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M24 24L40 12L24 4L8 12L24 24Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M8 36L24 24L40 36" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M24 44V24" stroke="currentColor" stroke-width="3"/>
+                        </svg>
+                        <h2>Welcome to Clinical Co-pilot</h2>
+                    </div>
+                    <p class="welcome-description">
+                        Your AI-powered clinical assistant is ready to help you analyze patient data, 
+                        identify trends, and provide evidence-based recommendations. Start by selecting 
+                        a patient or creating a new session. <a href="#" class="cite-link" data-doc="welcome_doc.pdf" data-page="1">[Test Reference]</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Selected files preview (moved above input) -->
+            <div id="selected-files-preview" class="selected-files-preview" style="display: none;">
+                <div class="files-list" id="files-list"></div>
+            </div>
+            
+            <form id="chat-form" class="chat-input-area">
+                <div class="input-container">
+                    <textarea 
+                        id="user-input" 
+                        placeholder="Type your clinical question or describe the patient's symptoms..."
+                        rows="3"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button id="browse-files-btn" class="file-action-btn" type="button">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 4L8 10L2 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 4H8V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Browse Files
+                        </button>
+                        <!-- Voice controls (Web Speech API) -->
+                        <button id="voice-start-btn" class="file-action-btn" type="button" title="Start voice input" aria-label="Start voice input">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 1.5C6.61929 1.5 5.5 2.61929 5.5 4V8C5.5 9.38071 6.61929 10.5 8 10.5C9.38071 10.5 10.5 9.38071 10.5 8V4C10.5 2.61929 9.38071 1.5 8 1.5Z" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M3 8C3 10.4853 5.01472 12.5 7.5 12.5H8.5C10.9853 12.5 13 10.4853 13 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M8 12.5V14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                            Voice
+                        </button>
+                        <button id="voice-stop-btn" class="file-action-btn" type="button" title="Stop voice input" aria-label="Stop voice input" disabled>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                            Stop
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" id="send-btn" class="send-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 2L14 8L2 14V2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M2 8H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </form>
+            
+            <!-- Hidden file input for browse functionality -->
+            <input type="file" id="file-input" multiple accept=".pdf,.txt,.doc,.docx" style="display: none;">
+        </main>
+
+        <!-- Right Sidebar (Evidence Explorer) -->
+        <aside class="evidence-explorer" id="evidence-explorer">
+            <div class="evidence-header">
+                <h3 id="evidence-doc-title">Evidence Explorer</h3>
+                <button id="close-evidence-btn" class="close-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="evidence-content" id="evidence-content">
+                <div class="page-info" id="page-info">Page 1 of 1</div>
+                <div id="pdf-viewer">
+                    <!-- PDF viewer placeholder -->
+                    <div class="pdf-viewer-placeholder">
+                        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 8H48C50.2091 8 52 9.79086 52 12V52C52 54.2091 50.2091 56 48 56H16C13.7909 56 12 54.2091 12 52V12C12 9.79086 13.7909 8 16 8Z" stroke="currentColor" stroke-width="3"/>
+                            <path d="M20 20H44M20 28H44M20 36H36M20 44H28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <p>Select a document to view evidence</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Processing...</p>
+        </div>
+    </div>
+    
+    <!-- Global drag-and-drop overlay -->
+    <div id="drop-overlay" class="drop-overlay" style="display: none;">
+        <div class="drop-zone">
+            <div class="drop-border">
+                <svg class="drop-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 15V16C21 18.7614 18.7614 21 16 21H8C5.23858 21 3 18.7614 3 16V15M7 10L12 5L17 10M12 5V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h3>Drop your files here to upload</h3>
+                <p>Drag and drop your medical documents anywhere on this page</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AWS SDK for JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1544.0/aws-sdk.min.js"></script>
+    <!-- PDF.js for client-side PDF text extraction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+      // Configure PDF.js worker
+      if (window['pdfjsLib']) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+    </script>
+    <!-- Tesseract.js for OCR fallback (for scanned PDFs) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    <script src="static\js\script.js"></script>
+    <script src="static\js\voice.js"></script>
+</body>
+</html>
