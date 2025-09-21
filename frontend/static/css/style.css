@@ -1,0 +1,1524 @@
+/*******************************************************************************
+ * AI Clinical Co-pilot Dashboard - Professional Command Center Theme
+ * Complete CSS Styling with Sophisticated Command Center Aesthetic
+ ******************************************************************************/
+
+/* ============================================================================
+ * 1. ROOT VARIABLES & GLOBAL SETUP
+ * ============================================================================*/
+
+/* Light Mode Variables */
+:root {
+    /* Light Mode Color Palette */
+    --bg-deep-space: #f8fafc;
+    --surface-1: #ffffff;
+    --surface-2: #f1f5f9;
+    --accent-blue: #2563eb;
+    --accent-blue-hover: #1d4ed8;
+    --alert-red: #dc2626;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: rgba(0, 0, 0, 0.1);
+    
+    /* Chat Input Specific Colors - Light Mode */
+    --input-bg: #F9FAFB;
+    --input-border: #E0E0E0;
+    --input-border-hover: #d1d5db;
+    --input-border-focus: var(--accent-blue);
+    --input-shadow-focus: rgba(66, 153, 225, 0.15);
+    
+    /* Additional utility colors */
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
+    --border-radius: 8px;
+    --border-radius-sm: 4px;
+    
+    /* Status colors */
+    --success-color: #059669;
+    --warning-color: #d97706;
+    --danger-color: #dc2626;
+    
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-size-sm: 12px;
+    --font-size-base: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 18px;
+    --font-size-2xl: 20px;
+    --font-size-3xl: 24px;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+    /* Command Center Color Palette - Dark Mode */
+    --bg-deep-space: #1a202c;
+    --surface-1: #2d3748;
+    --surface-2: #4a5568;
+    --accent-blue: #4299E1;
+    --accent-blue-hover: #2B6CB0;
+    --alert-red: #F56565;
+    --text-primary: #E2E8F0;
+    --text-secondary: #A0AEC0;
+    --border-color: rgba(255, 255, 255, 0.1);
+    
+    /* Chat Input Specific Colors - Dark Mode */
+    --input-bg: #2D3748;
+    --input-border: #4A5568;
+    --input-border-hover: #718096;
+    --input-border-focus: var(--accent-blue);
+    --input-shadow-focus: rgba(66, 153, 225, 0.25);
+    
+    /* Additional utility colors */
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    
+    /* Status colors */
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+}
+
+/* Global Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Smooth transitions for theme switching */
+* {
+    transition: background-color var(--transition-speed) ease, 
+                color var(--transition-speed) ease, 
+                border-color var(--transition-speed) ease,
+                box-shadow var(--transition-speed) ease;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--bg-deep-space);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    height: 100vh;
+}
+
+/* ============================================================================
+ * 2. MAIN LAYOUT STRUCTURE
+ * ============================================================================*/
+
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 320px 1fr 0px;
+    height: 100vh;
+    background-color: var(--bg-deep-space);
+    transition: grid-template-columns var(--transition-speed) ease;
+}
+
+.dashboard-container.evidence-active {
+    grid-template-columns: 320px 1fr 400px;
+}
+
+/* ============================================================================
+ * 3. LEFT SIDEBAR STYLING
+ * ============================================================================*/
+
+.sidebar {
+    background-color: var(--surface-1);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+    transition: all var(--transition-speed) ease;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-header .logo {
+    color: var(--accent-blue);
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+
+/* Primary Action Button */
+.primary-action-btn {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all var(--transition-speed) ease;
+    margin-bottom: 32px;
+}
+
+.primary-action-btn:hover {
+    background-color: var(--accent-blue-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.primary-action-btn .plus-icon {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+/* Sessions Section */
+.sessions-section h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+.session-history {
+    list-style: none;
+    margin-bottom: 16px;
+}
+
+.session-item {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    border: 1px solid transparent;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Session Item States */
+.session-item:hover {
+    background-color: var(--surface-2);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.session-item.active {
+    background-color: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-blue);
+}
+
+.session-item.active:hover {
+    background-color: var(--accent-blue-hover);
+}
+
+/* Session item styling for different types */
+.session-item .session-name {
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.session-item .patient-name {
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.session-item .patient-id {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.session-item .session-summary {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Status dots for different session types */
+.status-dot.general {
+    background-color: var(--accent-blue);
+}
+
+.status-dot.patient {
+    background-color: var(--success-color);
+}
+
+.status-dot.general.active {
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.6);
+}
+
+.status-dot.patient.active {
+    background-color: var(--success-color);
+    box-shadow: 0 0 8px rgba(5, 150, 105, 0.6);
+}
+
+.no-sessions-placeholder {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    margin-top: 16px;
+}
+
+/* ============================================================================
+ * 4. MAIN CHAT WINDOW STYLING
+ * ============================================================================*/
+
+.chat-window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-deep-space);
+    overflow: hidden;
+}
+
+/* Chat Header */
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    background-color: var(--surface-1);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Mode Toggle Styling */
+.mode-toggle-container {
+    display: flex;
+    align-items: center;
+}
+
+.mode-toggle {
+    display: flex;
+    background-color: var(--surface-2);
+    border-radius: var(--border-radius);
+    padding: 4px;
+    border: 1px solid var(--border-color);
+    gap: 2px;
+}
+
+.mode-toggle input[type="radio"] {
+    display: none;
+}
+
+.mode-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: var(--border-radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    color: var(--text-secondary);
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+.mode-label:hover {
+    color: var(--text-primary);
+    background-color: var(--surface-1);
+}
+
+.mode-label.general svg {
+    color: var(--accent-blue);
+}
+
+.mode-label.patient svg {
+    color: var(--success-color);
+}
+
+.mode-toggle input[type="radio"]:checked + .mode-label {
+    background-color: var(--surface-1);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.mode-toggle input[type="radio"]:checked + .mode-label.general {
+    background-color: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-blue);
+}
+
+.mode-toggle input[type="radio"]:checked + .mode-label.general svg {
+    color: white;
+}
+
+.mode-toggle input[type="radio"]:checked + .mode-label.patient {
+    background-color: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.mode-toggle input[type="radio"]:checked + .mode-label.patient svg {
+    color: white;
+}
+
+.patient-info .patient-name-placeholder {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.secondary-action-btn {
+    padding: 8px 12px;
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-speed) ease;
+}
+
+.secondary-action-btn:hover {
+    background-color: var(--surface-2);
+    color: var(--text-primary);
+    border-color: var(--accent-blue);
+}
+
+/* Header Actions Container */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    padding: 8px 12px;
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    width: 36px;
+    height: 36px;
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--surface-2);
+    color: var(--text-primary);
+    border-color: var(--accent-blue);
+}
+
+.theme-toggle-btn svg {
+    transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+    position: absolute;
+}
+
+/* Show sun icon by default (light mode) */
+.theme-toggle-btn .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+.theme-toggle-btn .moon-icon {
+    opacity: 0;
+    transform: rotate(180deg);
+}
+
+/* Show moon icon in dark mode */
+[data-theme="dark"] .theme-toggle-btn .sun-icon {
+    opacity: 0;
+    transform: rotate(-180deg);
+}
+
+[data-theme="dark"] .theme-toggle-btn .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+/* Chat Log */
+.chat-log {
+    flex: 1;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    background-color: var(--bg-deep-space);
+}
+
+.chat-message, .message {
+    margin-bottom: var(--spacing-md);
+    animation: fadeIn 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    /* Enhanced outline styling */
+    border: 2px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.chat-message.user, .message.user {
+    align-self: flex-end;
+    background: var(--accent-blue);
+    color: white;
+    /* Enhanced outline for user messages */
+    border: 2px solid #1d4ed8;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3), 0 0 0 1px rgba(37, 99, 235, 0.2);
+    transition: all var(--transition-speed) ease;
+}
+
+.chat-message.assistant, .message.assistant {
+    align-self: flex-start;
+    background: var(--surface-1);
+    border: 2px solid var(--border-color);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    transition: all var(--transition-speed) ease;
+    color: var(--text-primary);
+}
+
+/* Dark mode - AI assistant bubbles are WHITE */
+[data-theme="dark"] .chat-message.assistant, [data-theme="dark"] .message.assistant {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    color: #1a202c !important;
+}
+
+.chat-message .message-text, .message-text {
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+    font-size: 14px;
+    /* Ensure long content never gets cut off */
+    white-space: pre-wrap; /* preserve newlines but allow wrapping */
+    word-break: break-word; /* break long tokens/URLs */
+    overflow-wrap: anywhere; /* extra safety for very long strings */
+}
+
+.message-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.chat-message.user .message-header, .message.user .message-header {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Light mode - AI assistant text styling (white text on dark background) - Enhanced */
+[data-theme="light"] .chat-message.assistant .message-header, 
+[data-theme="light"] .message.assistant .message-header,
+[data-theme="light"] .dashboard-container .chat-message.assistant .message-header,
+[data-theme="light"] .dashboard-container .message.assistant .message-header {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="light"] .chat-message.assistant .timestamp, 
+[data-theme="light"] .message.assistant .timestamp,
+[data-theme="light"] .dashboard-container .chat-message.assistant .timestamp,
+[data-theme="light"] .dashboard-container .message.assistant .timestamp {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+[data-theme="light"] .chat-message.assistant .message-text, 
+[data-theme="light"] .message.assistant .message-text,
+[data-theme="light"] .dashboard-container .chat-message.assistant .message-text,
+[data-theme="light"] .dashboard-container .message.assistant .message-text {
+    color: #ffffff !important;
+}
+
+/* Dark mode - AI assistant text styling (white text on dark background) */
+[data-theme="dark"] .chat-message.assistant .message-header, [data-theme="dark"] .message.assistant .message-header {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="dark"] .chat-message.assistant .timestamp, [data-theme="dark"] .message.assistant .timestamp {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+[data-theme="dark"] .chat-message.assistant .message-text, [data-theme="dark"] .message.assistant .message-text {
+    color: #ffffff !important;
+}
+
+.chat-message.assistant .message-header,
+.message.assistant .message-header {
+    color: var(--text-secondary);
+}
+
+.timestamp {
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.message-text-container {
+    position: relative;
+    overflow: visible; /* do not clip animated text */
+}
+
+.thinking-message {
+    font-style: italic;
+    color: var(--text-secondary);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Welcome Message Card */
+.welcome-message-card {
+    background-color: var(--surface-1);
+    border: 1px solid var(--border-color);
+    border-top: 3px solid var(--accent-blue);
+    border-radius: var(--border-radius);
+    padding: 32px;
+    margin: auto;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 8px 32px var(--shadow-color);
+}
+
+/* Light mode specific adjustments */
+[data-theme="light"] .welcome-message-card {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Light mode - AI assistant bubbles are WHITE with BLACK text */
+[data-theme="light"] .chat-message.assistant, 
+[data-theme="light"] .message.assistant,
+[data-theme="light"] .dashboard-container .chat-message.assistant,
+[data-theme="light"] .dashboard-container .message.assistant {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 2px solid #e2e8f0 !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+    color: #000000 !important;
+}
+
+/* Light mode - user bubbles remain blue */
+[data-theme="light"] .chat-message.user, [data-theme="light"] .message.user {
+    background: var(--accent-blue);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover effects for messages */
+.chat-message:hover, .message:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 0 0 2px rgba(37, 99, 235, 0.3);
+    border-color: rgba(37, 99, 235, 0.5);
+}
+
+.chat-message.user:hover, .message.user:hover {
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4), 0 0 0 2px rgba(37, 99, 235, 0.5);
+    border-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+/* Light mode hover effects */
+[data-theme="light"] .chat-message.user:hover, [data-theme="light"] .message.user:hover {
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+}
+
+[data-theme="light"] .chat-message.assistant:hover, 
+[data-theme="light"] .message.assistant:hover,
+[data-theme="light"] .dashboard-container .chat-message.assistant:hover,
+[data-theme="light"] .dashboard-container .message.assistant:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12), 0 0 0 2px #cbd5e0 !important;
+    border-color: #cbd5e0 !important;
+    transform: translateY(-2px);
+}
+
+/* Dark mode - AI assistant bubbles are DARK with WHITE text */
+[data-theme="dark"] .chat-message.assistant, 
+[data-theme="dark"] .message.assistant,
+[data-theme="dark"] .dashboard-container .chat-message.assistant,
+[data-theme="dark"] .dashboard-container .message.assistant {
+    background: #2d3748 !important;
+    background-color: #2d3748 !important;
+    border: 2px solid #4a5568 !important;
+    border-color: #4a5568 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+}
+
+/* Dark mode hover effects */
+[data-theme="dark"] .chat-message.assistant:hover, [data-theme="dark"] .message.assistant:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.1) !important;
+    border-color: #718096 !important;
+    transform: translateY(-2px);
+}
+
+.welcome-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.welcome-header svg {
+    color: var(--accent-blue);
+}
+
+.welcome-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.welcome-description {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    line-height: 1.7;
+}
+
+.welcome-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.welcome-action-btn {
+    padding: 12px 20px;
+    background-color: var(--surface-2);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    text-align: left;
+}
+
+.welcome-action-btn:hover {
+    background-color: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* Chat Input Area */
+.chat-input-area {
+    background-color: var(--surface-1);
+    border-top: 1px solid var(--border-color);
+    padding: 16px 24px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.chat-input-area .input-container {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    flex: 1;
+}
+
+.chat-input-area .input-container:hover {
+    border-color: var(--input-border-hover);
+}
+
+.chat-input-area .input-container:focus-within {
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px var(--input-shadow-focus);
+}
+
+.input-container {
+    position: relative;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed) ease;
+    overflow: hidden;
+}
+
+.input-container:hover {
+    border-color: var(--input-border-hover);
+}
+
+.input-container:focus-within {
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px var(--input-shadow-focus);
+}
+
+#user-input {
+    width: 100%;
+    padding: 16px 100px 16px 16px;
+    background-color: transparent;
+    color: var(--text-primary);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 48px;
+    max-height: 120px;
+    transition: all var(--transition-speed) ease;
+    box-sizing: border-box;
+    outline: none;
+}
+
+#user-input:focus {
+    outline: none;
+}
+
+#user-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.input-actions {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    pointer-events: none;
+}
+
+.input-actions > * {
+    pointer-events: auto;
+}
+
+.input-actions > * {
+    pointer-events: auto;
+}
+
+.file-action-btn {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    pointer-events: all;
+}
+
+.file-action-btn:hover {
+    background: var(--surface-2);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+}
+
+.file-action-btn:hover {
+    background-color: var(--surface-2);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.send-btn {
+    background: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.send-btn:hover {
+    background: var(--accent-blue-hover, #1d4ed8);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+}
+
+.send-btn:active {
+    transform: translateY(0);
+}
+
+.send-btn:hover {
+    background-color: var(--accent-blue-hover);
+    transform: translateY(-1px);
+}
+
+
+
+/* ============================================================================
+ * 5. RIGHT SIDEBAR (EVIDENCE EXPLORER)
+ * ============================================================================*/
+
+/* Page Info Styling */
+.page-info {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    text-align: center;
+    padding: 8px;
+    background-color: var(--surface-2);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+/* Document Viewer Styling */
+.document-viewer {
+    background-color: var(--surface-2);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.loading-document {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+}
+
+.loading-document i {
+    font-size: 48px;
+    margin-bottom: 16px;
+    color: var(--accent-blue);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background-color: var(--surface-1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 16px;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--accent-blue);
+    border-radius: 2px;
+    animation: loading-progress 2s ease-in-out infinite;
+}
+
+@keyframes loading-progress {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+.document-page {
+    background-color: var(--surface-1);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    border: 1px solid var(--border-color);
+}
+
+.page-highlight {
+    text-align: left;
+}
+
+.page-highlight h4 {
+    color: var(--accent-blue);
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.highlighted-content {
+    background-color: var(--bg-deep-space);
+    padding: 16px;
+    border-radius: var(--border-radius-sm);
+    border-left: 3px solid var(--accent-blue);
+    margin-top: 12px;
+}
+
+.citation-reference {
+    background-color: var(--surface-2);
+    padding: 12px;
+    border-radius: var(--border-radius-sm);
+    margin-top: 12px;
+    border: 1px solid var(--border-color);
+}
+
+/* Evidence Explorer Active State */
+.dashboard-container.evidence-active .chat-window {
+    margin-right: 0;
+}
+
+/* Citation Links Styling */
+.cite-link {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 2px 4px;
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-speed) ease;
+}
+
+.cite-link:hover {
+    background-color: var(--surface-2);
+    text-decoration: underline;
+}
+
+.evidence-explorer {
+    background-color: var(--surface-1);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: opacity var(--transition-speed) ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dashboard-container.evidence-active .evidence-explorer {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.evidence-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    background-color: var(--surface-2);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.evidence-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.close-btn {
+    padding: 8px;
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed) ease;
+}
+
+.close-btn:hover {
+    background-color: var(--alert-red);
+    color: white;
+}
+
+.evidence-content {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.pdf-viewer-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-secondary);
+    text-align: center;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 40px;
+}
+
+.pdf-viewer-placeholder svg {
+    margin-bottom: 16px;
+    opacity: 0.6;
+}
+
+/* ============================================================================
+ * 6. ANIMATIONS
+ * ============================================================================*/
+
+/* AI Thinking Animation */
+@keyframes thinking-dots {
+    0%, 20% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+@keyframes thinking-wave {
+    0% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-10px);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+.ai-thinking-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: var(--surface-1);
+    border: 2px solid var(--border-color);
+    border-radius: 18px;
+    margin: 8px 0;
+    max-width: 85%;
+    align-self: flex-start;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    animation: thinking-wave 2s ease-in-out infinite;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ai-thinking-container .ai-avatar {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--accent-blue), #60a5fa);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.ai-thinking-container .thinking-text {
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+.ai-thinking-container .thinking-dots {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.ai-thinking-container .thinking-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-blue);
+    border-radius: 50%;
+    animation: thinking-dots 1.4s ease-in-out infinite;
+}
+
+.ai-thinking-container .thinking-dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.ai-thinking-container .thinking-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.ai-thinking-container .thinking-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Dark mode thinking container */
+[data-theme="dark"] .ai-thinking-container {
+    background: #2d3748;
+    border-color: #4a5568;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .ai-thinking-container .thinking-text {
+    color: #a0aec0;
+}
+
+/* Typewriter Animation */
+@keyframes typewriter {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.typewriter-text {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typewriter 2s steps(40, end);
+}
+
+/* ============================================================================
+ * 7. RESPONSIVE DESIGN
+ * ============================================================================*/
+
+/* File upload and preview styles - Rounded Card/Pill Design */
+.selected-files-preview {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: transparent;
+}
+
+.files-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.file-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--text-primary);
+    transition: all var(--transition-speed) ease;
+    max-width: 250px;
+    position: relative;
+}
+
+.file-card:hover {
+    background: var(--surface-1);
+    border-color: var(--accent-blue);
+}
+
+.file-card .file-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: var(--accent-blue);
+}
+
+.file-card .file-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.file-card .remove-file-btn {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed) ease;
+    padding: 0;
+}
+
+.file-card .remove-file-btn:hover {
+    background: var(--alert-red);
+    color: white;
+}
+
+.file-card .remove-file-btn svg {
+    width: 12px;
+    height: 12px;
+}
+
+/* Clear all files button */
+.clear-files-btn {
+    background: var(--surface-2);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.clear-files-btn:hover {
+    background: var(--alert-red);
+    color: white;
+    border-color: var(--alert-red);
+}
+
+/* Global drag-and-drop overlay styles */
+.drop-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.drop-zone {
+    width: 80%;
+    max-width: 600px;
+    height: 60%;
+    max-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drop-border {
+    width: 100%;
+    height: 100%;
+    border: 3px dashed var(--accent-blue);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all var(--transition-speed) ease;
+}
+
+.drop-border:hover,
+.drop-overlay.drag-over .drop-border {
+    border-color: var(--accent-blue-hover);
+    background: rgba(255, 255, 255, 0.95);
+    transform: scale(1.02);
+}
+
+.drop-icon {
+    width: 64px;
+    height: 64px;
+    color: var(--accent-blue);
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+.drop-border h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.drop-border p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Loading overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    text-align: center;
+    color: white;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 1200px) {
+    .sidebar {
+        width: 280px;
+    }
+    
+    .evidence-explorer {
+        width: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+    }
+    
+    .evidence-explorer {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        z-index: 1000;
+    }
+}
+
+/* ============================================================================
+ * 8. UTILITY CLASSES
+ * ============================================================================*/
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: var(--text-secondary);
+}
+
+.mb-4 {
+    margin-bottom: 24px;
+}
+
+.mt-4 {
+    margin-top: 24px;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+/* ============================================================================
+ * 9. SCROLLBAR STYLING
+ * ============================================================================*/
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--surface-1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--surface-2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-blue);
+}
+
+/* Firefox Scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-2) var(--surface-1);
+}
+
+/* ============================================================================
+ * 10. THEME OVERRIDE FALLBACKS - Ensure AI Assistant Bubble Colors Apply
+ * ============================================================================*/
+
+/* Ultimate fallback for light mode - AI assistant dark bubbles */
+html[data-theme="light"] .chat-message.assistant,
+html[data-theme="light"] .message.assistant {
+    background: #1a202c !important;
+    border: 3px solid #2d3748 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="light"] .chat-message.assistant *,
+html[data-theme="light"] .message.assistant * {
+    color: #ffffff !important;
+}
+
+/* Ultimate fallback for dark mode - AI assistant white bubbles */
+html[data-theme="dark"] .chat-message.assistant,
+html[data-theme="dark"] .message.assistant {
+    background: #ffffff !important;
+    border: 3px solid #e2e8f0 !important;
+    color: #1a202c !important;
+}
+
+html[data-theme="dark"] .chat-message.assistant *,
+html[data-theme="dark"] .message.assistant * {
+    color: #1a202c !important;
+}
